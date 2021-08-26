@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAL.ATANW</title>
+</head>
+<body>
+    <header>
+        <div id="mainTitle">
+            <h1>*company name*<BR> COVID-19 FEED CENTER</h1>
+            <h4>Due to Safe & Healthy Protocol</h4>
+        </div>
+    </header>
+    <main>
+        <div id="personOutput" >
+            <h1 id="searchH1">PERSON FOUND</h1>
+            
+            <p class="searchFirstRow" id="idAdd">ID</p>
+            <p class="searchFirstRow" id="firstNameAdd">First name</p>
+            <p class="searchFirstRow" id="lastNameAdd">LAST NAME</p>
+            <p class="searchFirstRow" id="yearAdd">YEAR</p>
+            <p class="searchFirstRow" id="CityAdd">CITY</p>
+            <p class="searchFirstRow" id="Date">DATE  </p>
+            
+        </div>
+        <div id="personAdded" >
+            <h1 id="addH1">PERSON ADDED</h1>
+            <p class="addFirstRow" id="idAdd">ID</p>
+            <p class="addFirstRow" id="firstNameAdd">First name</p>
+            <p class="addFirstRow" id="lastNameAdd">LAST NAME</p>
+            <p class="addFirstRow" id="yearAdd">YEAR</p>
+            <p class="addFirstRow" id="CityAdd">CITY</p>
+            <p class="addFirstRow" id="Date">DATE  </p>    
+        </div>            
+        <div id=inputContainer>
+            <form id="form">
+                <input type="reset" value="reset" id="reset" class="button">
+                <br>
+                <label for="search">find person by name</label><br><br>
+                <input  type="text" id="searchName" name="search"   ><br>
+                <input type="button" class="button" value="search" id="searchBtn" name="search"style="margin-top:2%"><br>
+                <label for="firstName"> First Name </label><br>
+                <input class="styledInput" type="text" id="firstName" name="firstName" ><br>
+                <label for="lastName"> Last Name </label><br>
+                <input class="styledInput"type="text" id="lastName" name="lastName"><br>
+                <label for="ID">ID</label><br>
+                <input class="styledInput"type="number" name="ID" id="ID"><br>
+                <label for="yearOfBirth"> Year Of Birth </label><br>
+                <input class="styledInput"type="number" id="yearOfBirth" name="yearOfBirth"> <br>                      
+                <label for="city">City</label><br>
+                <input class="styledInput"type="text" id="city" name="city"> <br><br>
+                <label for="true/false">STATUS</label><br><br>
+                <label for="vaccine">vaccinated/recoverd</label>
+                <input type="radio" class="radioInput" name="true/false" value="Vaccinated" ><br><br>
+                <label for="vaccine">CORONA TEST RESULT</label>
+                <input type="radio" class="radioInput" name="true/false" value="unvaccintaed" id="unvaccintaed" ><br><br>
+                <label for="file" style="color: black;  " class="file">permint</label><br>
+                <input type="file" class="file"  id="file"><br>
+               <input type="button" class="button" value="submit" id="addBtn" name="submit" style="margin:2%"><br>
+               <input type="button" class="button" value="update" id="update" name="update">  
+               <p id="fixData"></p>
+            </form>
+        </div>
+    </main>
+    <footer></footer>
+<script src="js/main.js" type="text/javascript"></script>
+</body>
+</html>
