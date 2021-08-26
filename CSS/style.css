@@ -102,8 +102,8 @@ label{
 }
 
 
-@media all and (max-width:"700px"){
-    body{
+@media only screen and (max-width: 600px) {
+    #form{
         background-image: none;
         box-shadow: none;
     }
