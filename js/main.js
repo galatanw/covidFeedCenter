@@ -34,7 +34,6 @@ const update=document.getElementById("update")
 
 const file=document.getElementById("file")
 
-let fullName=[]
 const subjects=[]
 
 
@@ -95,17 +94,18 @@ function inputCheack() {
             
 }        
 function cheackForID() {
+    
     let l=subjects.length;
     let id=ID.value;
+    console.log(id.length+"A");
     for (let i = 0; i < l; i++) {
-        if(id==subjects[i].myId){
+            console.log(id.length);
             return true
         }       
-    }
-     if(id.length!=9&&id.length<0){
-         
+    
+     if(id.length!=9&&id.length>0){
         fixData.innerHTML+="ID must contain all 9 digits only <br>"
-    return "unqualified"
+        return "unqualified"
     }
     return false
 }
@@ -154,36 +154,41 @@ if(inputCheackResult==true&&radioCheackResult==true){
 
 // searchbtn
 searchBtn.onclick=function () {
+    addDiv.style.display="none"
 let mySearchName=searchName.value.toUpperCase()
+let a=mySearchName.indexOf(" ")
+let l=subjects.length
+let counter;
 let fullName=[]
-addDiv.style.display="none"
 // div cleaner
 for (let i = 0; i < 6; i++) {
         searchTxt[i].innerHTML=""        
 }
-let l=subjects.length
-let counter=0
-let a=mySearchName.indexOf(' ')
 
 // white space loop
-    for (let i = 0; i <1; i++) { 
-        if(a>-1){
-        let b=mySearchName.indexOf(' ',(a+1)) 
+for (let i = 0; i <1; i++) { 
+    if(a>-1){
+        let b=mySearchName.indexOf(" ",(a+1)) 
             if(b>-1){
-                let c=mySearchName.indexOf(' ',(b+1))
+                let c=mySearchName.indexOf(" ",(b+1))
                     if(c>-1){
+            console.log("three space");
+
                         let searchFirstName=mySearchName.slice(0,a)
                         let searchSecondName =mySearchName.slice(c+1)
                         fullName.push(searchFirstName)
                         fullName.push(searchSecondName)
                         break
                     }
+            console.log("two space");
+
                 let searchFirstName=mySearchName.slice(0,a)
                 let searchSecondName =mySearchName.slice(b+1)
                 fullName.push(searchFirstName)
                 fullName.push(searchSecondName)
                 break
             }
+            console.log("one space");
         let searchFirstName=mySearchName.slice(0,a)
         let searchSecondName =mySearchName.slice(a+1) 
         fullName.push(searchFirstName)
@@ -194,32 +199,10 @@ let a=mySearchName.indexOf(' ')
            fullName=mySearchName               
     }
 // full name match loop
-    for (let i = 0; i < l; i++) { 
-           
+for (let i = 0; i < l; i++) { 
+        console.log(fullName)
         if(fullName[1]==subjects[i].firstName && fullName[0]==subjects[i].lastName){
-            counter="A"
-            searchDiv.style.display="block"
-            searchTxt[0].innerHTML= subjects[subjects.length-1].firstName                
-            searchTxt[1].innerHTML= subjects[subjects.length-1].lastName                
-            searchTxt[2].innerHTML=subjects[subjects.length-1].yearOfBirth                
-            searchTxt[3].innerHTML=subjects[subjects.length-1].myId    
-            searchTxt[4].innerHTML=subjects[subjects.length-1].city  
-            searchTxt[5].innerHTML=subjects[subjects.length-1].uploadTime
-            break
-        } 
-        if(fullName[0]==subjects[i].firstName && fullName[1]==subjects[i].lastName){
-            counter="a"
-            searchDiv.style.display="block"
-            searchTxt[0].innerHTML= subjects[subjects.length-1].firstName                
-            searchTxt[1].innerHTML= subjects[subjects.length-1].lastName                
-            searchTxt[2].innerHTML=subjects[subjects.length-1].yearOfBirth                
-            searchTxt[3].innerHTML=subjects[subjects.length-1].myId    
-            searchTxt[4].innerHTML=subjects[subjects.length-1].city  
-            searchTxt[5].innerHTML=subjects[subjects.length-1].uploadTime
-            break
-        }
-        if(a==-1 && fullName==subjects[i].firstName || fullName==subjects[i].lastName){
-            counter="a"
+            counter="full name "
             console.log(counter);
             searchDiv.style.display="block"
             searchTxt[0].innerHTML= subjects[subjects.length-1].firstName                
@@ -228,11 +211,36 @@ let a=mySearchName.indexOf(' ')
             searchTxt[3].innerHTML=subjects[subjects.length-1].myId    
             searchTxt[4].innerHTML=subjects[subjects.length-1].city  
             searchTxt[5].innerHTML=subjects[subjects.length-1].uploadTime
-            break
+            return
+        } 
+        if(fullName[0]==subjects[i].firstName && fullName[1]==subjects[i].lastName){
+            counter="full name"
+            console.log(counter);
+            searchDiv.style.display="block"
+            searchTxt[0].innerHTML= subjects[subjects.length-1].firstName                
+            searchTxt[1].innerHTML= subjects[subjects.length-1].lastName                
+            searchTxt[2].innerHTML=subjects[subjects.length-1].yearOfBirth                
+            searchTxt[3].innerHTML=subjects[subjects.length-1].myId    
+            searchTxt[4].innerHTML=subjects[subjects.length-1].city  
+            searchTxt[5].innerHTML=subjects[subjects.length-1].uploadTime
+            return
+        }
+        if(a==-1 && fullName==subjects[i].firstName || fullName==subjects[i].lastName){
+            counter="one name"
+            console.log(counter);
+            searchDiv.style.display="block"
+            searchTxt[0].innerHTML= subjects[subjects.length-1].firstName                
+            searchTxt[1].innerHTML= subjects[subjects.length-1].lastName                
+            searchTxt[2].innerHTML=subjects[subjects.length-1].yearOfBirth                
+            searchTxt[3].innerHTML=subjects[subjects.length-1].myId    
+            searchTxt[4].innerHTML=subjects[subjects.length-1].city  
+            searchTxt[5].innerHTML=subjects[subjects.length-1].uploadTime
+            return
         } 
     } 
 // did not find subject 
-if (counter==0){
+
+if(l>0){
     searchDiv.style.display="block"
     searchTxt[0].style.display="none"                
     searchTxt[1].style.display="none"                
@@ -241,7 +249,9 @@ if (counter==0){
     searchTxt[4].style.display="none"
     searchTxt[5].style.display="none"
     document.getElementById("searchH1").innerHTML="sorry ;( <br> did not found him  /her<br>try using this synatx:<br>first-Name last-Name (exp:gal atanw)"
-}        
+    return
+}
+    alert("i think my list is empty :/ ...")
 }
 
 
