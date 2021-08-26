@@ -139,6 +139,7 @@ if(inputCheackResult==true&&radioCheackResult==true){
                addTxt[3].innerHTML=subjects[subjects.length-1].myId    
                addTxt[4].innerHTML=subjects[subjects.length-1].city  
                addTxt[5].innerHTML=t.toUTCString()
+        fixData.innerHTML="look up ;) ^"
         
     }
        else if(cheackForIDResult==true){
