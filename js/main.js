@@ -1,3 +1,4 @@
+
 const addDiv=document.getElementById("personAdded")
 
 const addBtn=document.getElementById("addBtn")
@@ -5,6 +6,9 @@ const addBtn=document.getElementById("addBtn")
 const addTxt=document.getElementsByClassName("addFirstRow")
 
 const searchDiv=document.getElementById("personOutput")
+
+const searchH1=document.getElementById("searchH1")
+
 
 const searchBtn=document.getElementById("searchBtn")
 
@@ -35,17 +39,18 @@ const update=document.getElementById("update")
 const file=document.getElementById("file")
 
 const subjects=[]
+var fullName;
 
 
 // addbtn
 addBtn.onclick=function () {
 searchDiv.style.display="none"
 fixData.innerHTML=""
-let statuse=3;
+let status ;
 function radioCheack() {
         for (let i = 0; i < 2; i++) {
             if(radioInput[i].checked==true) { 
-                statuse=i  
+                status=i  
                 return true
             }
         }
@@ -97,10 +102,10 @@ function cheackForID() {
     
     let l=subjects.length;
     let id=ID.value;
-    console.log(id.length+"A");
     for (let i = 0; i < l; i++) {
-            console.log(id.length);
-            return true
+        if (id==subjects[i][0].myId) {
+            return  true
+        }
         }       
     
      if(id.length!=9&&id.length>0){
@@ -116,15 +121,15 @@ let t=new Date()
 
 function newPerson () {
     subjects.push(
-        {firstName:firstName.value.toUpperCase(),
+        [{firstName:firstName.value.toUpperCase(),
             lastName:lastName.value.toUpperCase(),
             yearOfBirth:yearOfBirth.value,
             myId:ID.value,
             city:city.value.toUpperCase(),
             uploadTime:t.toUTCString(),
-            vaccine:statuse,
+            vaccine:status,
             status:file.value
-        }
+        }]
 
     )
 }
@@ -133,11 +138,11 @@ if(inputCheackResult==true&&radioCheackResult==true){
     if(cheackForIDResult==false){
             newPerson()
             addDiv.style.display="block"
-               addTxt[0].innerHTML= subjects[subjects.length-1].firstName                
-               addTxt[1].innerHTML= subjects[subjects.length-1].lastName                
-               addTxt[2].innerHTML=subjects[subjects.length-1].yearOfBirth                
-               addTxt[3].innerHTML=subjects[subjects.length-1].myId    
-               addTxt[4].innerHTML=subjects[subjects.length-1].city  
+               addTxt[0].innerHTML= subjects[subjects.length-1][0].firstName                
+               addTxt[1].innerHTML= subjects[subjects.length-1][0].lastName                
+               addTxt[2].innerHTML=subjects[subjects.length-1][0].yearOfBirth                
+               addTxt[3].innerHTML=subjects[subjects.length-1][0].myId    
+               addTxt[4].innerHTML=subjects[subjects.length-1][0].city  
                addTxt[5].innerHTML=t.toUTCString()
         fixData.innerHTML="look up ;) ^"
         
@@ -154,25 +159,27 @@ if(inputCheackResult==true&&radioCheackResult==true){
 
 // searchbtn
 searchBtn.onclick=function () {
-    addDiv.style.display="none"
+addDiv.style.display="none"
 let mySearchName=searchName.value.toUpperCase()
 let a=mySearchName.indexOf(" ")
 let l=subjects.length
 let counter;
-let fullName=[]
+ fullName=[]
 // div cleaner
 for (let i = 0; i < 6; i++) {
-        searchTxt[i].innerHTML=""        
+        searchTxt[i].innerHTML=""  
+        counter=1      
+
 }
 
-// white space loop
+// white space loop + creates full name
+if(l>0){
 for (let i = 0; i <1; i++) { 
     if(a>-1){
         let b=mySearchName.indexOf(" ",(a+1)) 
             if(b>-1){
                 let c=mySearchName.indexOf(" ",(b+1))
                     if(c>-1){
-            console.log("three space");
 
                         let searchFirstName=mySearchName.slice(0,a)
                         let searchSecondName =mySearchName.slice(c+1)
@@ -180,7 +187,6 @@ for (let i = 0; i <1; i++) {
                         fullName.push(searchSecondName)
                         break
                     }
-            console.log("two space");
 
                 let searchFirstName=mySearchName.slice(0,a)
                 let searchSecondName =mySearchName.slice(b+1)
@@ -188,7 +194,6 @@ for (let i = 0; i <1; i++) {
                 fullName.push(searchSecondName)
                 break
             }
-            console.log("one space");
         let searchFirstName=mySearchName.slice(0,a)
         let searchSecondName =mySearchName.slice(a+1) 
         fullName.push(searchFirstName)
@@ -198,61 +203,63 @@ for (let i = 0; i <1; i++) {
         } 
            fullName=mySearchName               
     }
+}
+else{
+    alert("i think my list is empty :/ ...")
+    return
+}
+
 // full name match loop
 for (let i = 0; i < l; i++) { 
         console.log(fullName)
-        if(fullName[1]==subjects[i].firstName && fullName[0]==subjects[i].lastName){
-            counter="full name "
-            console.log(counter);
+        if(fullName[1]==subjects[i][0].firstName && fullName[0]==subjects[i][0].lastName){
             searchDiv.style.display="block"
-            searchTxt[0].innerHTML= subjects[subjects.length-1].firstName                
-            searchTxt[1].innerHTML= subjects[subjects.length-1].lastName                
-            searchTxt[2].innerHTML=subjects[subjects.length-1].yearOfBirth                
-            searchTxt[3].innerHTML=subjects[subjects.length-1].myId    
-            searchTxt[4].innerHTML=subjects[subjects.length-1].city  
-            searchTxt[5].innerHTML=subjects[subjects.length-1].uploadTime
+            searchH1.innerHTML=document.getElementById("searchH1").innerHTML="PERSON FOUND"
+            searchTxt[0].innerHTML= subjects[subjects.length-1][0].firstName                
+            searchTxt[1].innerHTML= subjects[subjects.length-1][0].lastName                
+            searchTxt[2].innerHTML=subjects[subjects.length-1][0].yearOfBirth                
+            searchTxt[3].innerHTML=subjects[subjects.length-1][0].myId    
+            searchTxt[4].innerHTML=subjects[subjects.length-1][0].city  
+            searchTxt[5].innerHTML=subjects[subjects.length-1][0].uploadTime
             return
         } 
-        if(fullName[0]==subjects[i].firstName && fullName[1]==subjects[i].lastName){
-            counter="full name"
-            console.log(counter);
+        if(fullName[0]==subjects[i][0].firstName && fullName[1]==subjects[i][0].lastName){
             searchDiv.style.display="block"
-            searchTxt[0].innerHTML= subjects[subjects.length-1].firstName                
-            searchTxt[1].innerHTML= subjects[subjects.length-1].lastName                
-            searchTxt[2].innerHTML=subjects[subjects.length-1].yearOfBirth                
-            searchTxt[3].innerHTML=subjects[subjects.length-1].myId    
-            searchTxt[4].innerHTML=subjects[subjects.length-1].city  
-            searchTxt[5].innerHTML=subjects[subjects.length-1].uploadTime
+            searchH1.innerHTML=document.getElementById("searchH1").innerHTML="PERSON FOUND"
+            searchTxt[0].innerHTML= subjects[subjects.length-1][0].firstName                
+            searchTxt[1].innerHTML= subjects[subjects.length-1][0].lastName                
+            searchTxt[2].innerHTML=subjects[subjects.length-1][0].yearOfBirth                
+            searchTxt[3].innerHTML=subjects[subjects.length-1][0].myId    
+            searchTxt[4].innerHTML=subjects[subjects.length-1][0].city  
+            searchTxt[5].innerHTML=subjects[subjects.length-1][0].uploadTime
             return
         }
-        if(a==-1 && fullName==subjects[i].firstName || fullName==subjects[i].lastName){
-            counter="one name"
-            console.log(counter);
+        if(fullName==subjects[i][0].firstName || fullName==subjects[i][0].lastName){
             searchDiv.style.display="block"
-            searchTxt[0].innerHTML= subjects[subjects.length-1].firstName                
-            searchTxt[1].innerHTML= subjects[subjects.length-1].lastName                
-            searchTxt[2].innerHTML=subjects[subjects.length-1].yearOfBirth                
-            searchTxt[3].innerHTML=subjects[subjects.length-1].myId    
-            searchTxt[4].innerHTML=subjects[subjects.length-1].city  
-            searchTxt[5].innerHTML=subjects[subjects.length-1].uploadTime
+            searchH1.innerHTML=document.getElementById("searchH1").innerHTML="PERSON FOUND"
+            searchTxt[0].innerHTML= subjects[subjects.length-1][0].firstName                
+            searchTxt[1].innerHTML= subjects[subjects.length-1][0].lastName                
+            searchTxt[2].innerHTML=subjects[subjects.length-1][0].yearOfBirth                
+            searchTxt[3].innerHTML=subjects[subjects.length-1][0].myId    
+            searchTxt[4].innerHTML=subjects[subjects.length-1][0].city  
+            searchTxt[5].innerHTML=subjects[subjects.length-1][0].uploadTime
             return
         } 
     } 
 // did not find subject 
+    if(missing=1){
 
-if(l>0){
-    searchDiv.style.display="block"
-    searchTxt[0].style.display="none"                
-    searchTxt[1].style.display="none"                
-    searchTxt[2].style.display="none"                
-    searchTxt[3].style.display="none"  
-    searchTxt[4].style.display="none"
-    searchTxt[5].style.display="none"
-    document.getElementById("searchH1").innerHTML="sorry ;( <br> did not found him  /her<br>try using this synatx:<br>first-Name last-Name (exp:gal atanw)"
-    return
+        searchDiv.style.display="block"
+        searchTxt[0].innerHTML=" "                
+        searchTxt[1].innerHTML=" "                
+        searchTxt[2].innerHTML=" "                
+        searchTxt[3].innerHTML=" "  
+        searchTxt[4].innerHTML=" "
+        searchTxt[5].innerHTML=" "
+        searchH1.innerHTML="sorry ;( <br> did not found him  /her<br>try using this synatx:<br>first-Name last-Name (exp:gal atanw)"
+    }
 }
-    alert("i think my list is empty :/ ...")
-}
+
 
 
 
@@ -275,12 +282,12 @@ update.onclick=function () {
     let t=new Date()
     let counter;
 for (let i = 0; i < l; i++) {
-    if(subjects[i].myId==id){
-        subjects.push(
+    if(subjects[i][0].myId==id){
+        subjects[i].push(
             {newStatuse:file.value,
             date:t.toUTCString(),
             newStatuseId:id
-        }
+            }
         )    
         counter = i
         break
@@ -291,6 +298,6 @@ if(counter==null){
     alert("hey ,  listen your ID is not listed yet please ADD yourself first")
     return
 }
-fixData.innerHTML=`"hey, ${subjects[counter].firstName} you'r permit has been added"`
+fixData.innerHTML=`"hey, ${subjects[counter][0].firstName} you'r permit has been added"`
 }
     

@@ -7,7 +7,7 @@ li
 }
 body{
     width: 98vw;
-    background-image: linear-gradient(-225deg, #7085B6 0%, #87A7D9 50%, #DEF3F8 100%);}    
+    background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);}    
     #mainTitle{
         width: 100%;
         height: 8%;
@@ -22,7 +22,7 @@ body{
     left: 25%;
     margin-top: 10vh;
     text-align: center;
-    background-image: linear-gradient(to top, #feada6 0%, #f5efef 100%);;
+    background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     box-shadow: 3px 5px 30px black;
     border-radius: 5%;
 }
@@ -103,6 +103,16 @@ label{
 
 
 @media only screen and (max-width: 600px) {
+    body{
+        background-image: none;
+        background-color: rgb(83, 83, 83);
+
+    }
+    #mainTitle{
+        color: wheat;
+        font-family:'Courier New', Courier, monospace;
+        text-shadow: none;
+    }
     #form{
         background-image: none;
         box-shadow: none;
@@ -110,8 +120,11 @@ label{
     .addFirstRow{
         margin: 0;
     }
-    #file{
-        direction: rtl;
+    #searchName{
+    color: white;
+    }
+    .styledInput{
+        color: white;
     }
 
 }
