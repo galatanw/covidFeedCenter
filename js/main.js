@@ -126,7 +126,7 @@ function newPerson () {
             yearOfBirth:yearOfBirth.value,
             myId:ID.value,
             city:city.value.toUpperCase(),
-            uploadTime:t.toUTCString(),
+            uploadTime:t,
             vaccine:status,
             status:file.value
         }]
@@ -285,7 +285,7 @@ for (let i = 0; i < l; i++) {
     if(subjects[i][0].myId==id){
         subjects[i].push(
             {newStatuse:file.value,
-            date:t.toUTCString(),
+            date:t,
             newStatuseId:id
             }
         )    
