@@ -1,3 +1,4 @@
+const table=document.getElementById("table")
 
 const addDiv=document.getElementById("personAdded")
 
@@ -39,7 +40,7 @@ const update=document.getElementById("update")
 const file=document.getElementById("file")
 
 const subjects=[]
-var fullName;
+
 
 
 // addbtn
@@ -160,18 +161,13 @@ if(inputCheackResult==true&&radioCheackResult==true){
 // searchbtn
 searchBtn.onclick=function () {
 addDiv.style.display="none"
-let mySearchName=searchName.value.toUpperCase()
-let a=mySearchName.indexOf(" ")
-let l=subjects.length
-let counter;
- fullName=[]
+table.innerHTML=""
+fixData.innerHTML=""
+ let mySearchName=searchName.value.toUpperCase(),a=mySearchName.indexOf(" "),l=subjects.length,OneNameMatch,namesForSearch=[],fullName=[] 
 // div cleaner
 for (let i = 0; i < 6; i++) {
         searchTxt[i].innerHTML=""  
-        counter=1      
-
 }
-
 // white space loop + creates full name
 if(l>0){
 for (let i = 0; i <1; i++) { 
@@ -198,66 +194,99 @@ for (let i = 0; i <1; i++) {
         let searchSecondName =mySearchName.slice(a+1) 
         fullName.push(searchFirstName)
         fullName.push(searchSecondName)
-            
             break
         } 
            fullName=mySearchName               
     }
 }
 else{
-    alert("i think my list is empty :/ ...")
+    alert(" My list is empty :/ ...")
     return
 }
-
+let noone=null  ;
 // full name match loop
 for (let i = 0; i < l; i++) { 
-        console.log(fullName)
         if(fullName[1]==subjects[i][0].firstName && fullName[0]==subjects[i][0].lastName){
-            searchDiv.style.display="block"
-            searchH1.innerHTML=document.getElementById("searchH1").innerHTML="PERSON FOUND"
-            searchTxt[0].innerHTML= subjects[subjects.length-1][0].firstName                
-            searchTxt[1].innerHTML= subjects[subjects.length-1][0].lastName                
-            searchTxt[2].innerHTML=subjects[subjects.length-1][0].yearOfBirth                
-            searchTxt[3].innerHTML=subjects[subjects.length-1][0].myId    
-            searchTxt[4].innerHTML=subjects[subjects.length-1][0].city  
-            searchTxt[5].innerHTML=subjects[subjects.length-1][0].uploadTime
-            return
+            namesForSearch.push({
+                firstName:subjects[i][0].firstName,
+                lastName:subjects[i][0].lastName,
+                yearOfBirth:subjects[i][0].yearOfBirth,
+                myId:subjects[i][0].myId,
+                city:subjects[i][0].city,
+                date:subjects[i][0].uploadTime})
+                OneNameMatch= i
         } 
         if(fullName[0]==subjects[i][0].firstName && fullName[1]==subjects[i][0].lastName){
-            searchDiv.style.display="block"
-            searchH1.innerHTML=document.getElementById("searchH1").innerHTML="PERSON FOUND"
-            searchTxt[0].innerHTML= subjects[subjects.length-1][0].firstName                
-            searchTxt[1].innerHTML= subjects[subjects.length-1][0].lastName                
-            searchTxt[2].innerHTML=subjects[subjects.length-1][0].yearOfBirth                
-            searchTxt[3].innerHTML=subjects[subjects.length-1][0].myId    
-            searchTxt[4].innerHTML=subjects[subjects.length-1][0].city  
-            searchTxt[5].innerHTML=subjects[subjects.length-1][0].uploadTime
-            return
+            namesForSearch.push({
+                firstName:subjects[i][0].firstName,
+                lastName:subjects[i][0].lastName,
+                yearOfBirth:subjects[i][0].yearOfBirth,
+                myId:subjects[i][0].myId,
+                city:subjects[i][0].city,
+                date:subjects[i][0].uploadTime})
+                OneNameMatch= i
         }
         if(fullName==subjects[i][0].firstName || fullName==subjects[i][0].lastName){
-            searchDiv.style.display="block"
-            searchH1.innerHTML=document.getElementById("searchH1").innerHTML="PERSON FOUND"
-            searchTxt[0].innerHTML= subjects[subjects.length-1][0].firstName                
-            searchTxt[1].innerHTML= subjects[subjects.length-1][0].lastName                
-            searchTxt[2].innerHTML=subjects[subjects.length-1][0].yearOfBirth                
-            searchTxt[3].innerHTML=subjects[subjects.length-1][0].myId    
-            searchTxt[4].innerHTML=subjects[subjects.length-1][0].city  
-            searchTxt[5].innerHTML=subjects[subjects.length-1][0].uploadTime
-            return
+            namesForSearch.push({
+                firstName:subjects[i][0].firstName,
+                lastName:subjects[i][0].lastName,
+                yearOfBirth:subjects[i][0].yearOfBirth,
+                myId:subjects[i][0].myId,
+                city:subjects[i][0].city,
+                date:subjects[i][0].uploadTime})
+                OneNameMatch= i
         } 
+        
+        
     } 
-// did not find subject 
-    if(missing=1){
 
-        searchDiv.style.display="block"
-        searchTxt[0].innerHTML=" "                
-        searchTxt[1].innerHTML=" "                
-        searchTxt[2].innerHTML=" "                
-        searchTxt[3].innerHTML=" "  
-        searchTxt[4].innerHTML=" "
-        searchTxt[5].innerHTML=" "
-        searchH1.innerHTML="sorry ;( <br> did not found him  /her<br>try using this synatx:<br>first-Name last-Name (exp:gal atanw)"
+
+// output to client
+
+//namesForSearch symbolize the function array for all found people
+if(namesForSearch.length>1){
+    l=namesForSearch.length
+    searchDiv.style.display="block"
+    searchH1.innerHTML="MULTIPLY PEOPLE ANSWER <br> THAT SEARCH REQUEST <br> GO TO THE BOTTOM <br> OF THE PAGE TO FIND YOURSELF"
+    table.innerHTML=
+    `<h4>here is all the people named ${fullName}</h4>
+    <tr> 
+    <td><h6>FIRST NAME</h6></td>
+    <td><h6>LAST NAME</h6></td>
+    <td><h6>BIRTH YEAR</h6></td>
+    <td><h6></h6>I.D</td>
+    <td><h6></h6>CITY</td>
+    <td><h6></h6>FIRST SUBMIT</td>
+    `
+    for (let i = 0; i < l; i++) {
+        table.innerHTML+=`<tr>
+        <td> ${namesForSearch[i].firstName} </td>
+        <td> ${namesForSearch[i].lastName} </td>
+        <td> ${namesForSearch[i].yearOfBirth} </td>
+        <td> ${namesForSearch[i].myId} </td>
+        <td> ${namesForSearch[i].city} </td>
+        <td> ${namesForSearch[i].date} </td>
+        </tr>
+        `
     }
+    return
+}
+//OneNameSearch symbolize the index of the subject 
+if(namesForSearch.length==1){
+    searchDiv.style.display="block"
+    searchH1.innerHTML=document.getElementById("searchH1").innerHTML="PERSON FOUND"
+    searchTxt[0].innerHTML= subjects[OneNameMatch][0].firstName                
+    searchTxt[1].innerHTML= subjects[OneNameMatch][0].lastName                
+    searchTxt[2].innerHTML=subjects[OneNameMatch][0].yearOfBirth                
+    searchTxt[3].innerHTML=subjects[OneNameMatch][0].myId    
+    searchTxt[4].innerHTML=subjects[OneNameMatch][0].city  
+    searchTxt[5].innerHTML=subjects[OneNameMatch][0].uploadTime
+    return
+}       
+// did not find subject 
+    searchDiv.style.display="block"
+    searchH1.innerHTML="sorry ;( <br> did not found him  /her<br>try using this synatx:<br>first-Name last-Name (exp:gal atanw)"
+
 }
 
 
@@ -268,6 +297,7 @@ reset.onclick=function () {
     addDiv.style.display="none"
     searchDiv.style.display="none"
     fixData.innerHTML=""
+    table.innerHTML=""
 }
 
 
@@ -289,13 +319,13 @@ for (let i = 0; i < l; i++) {
             newStatuseId:id
             }
         )    
-        counter = i
-        break
+    counter = i
+    break
     }   
 
 }
 if(counter==null){
-    alert("hey ,  listen your ID is not listed yet please ADD yourself first")
+    alert("Hi , your ID is not listed yet please ADD yourself first")
     return
 }
 fixData.innerHTML=`"hey, ${subjects[counter][0].firstName} you'r permit has been added"`
